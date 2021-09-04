@@ -15,7 +15,7 @@
 * be modified as some of the other Arduinos (eg. Uno) would do
 * -------------------------------------------------------------------------
 */
-//#define DEBUG
+#define DEBUG
 
 // ST keyboard reset pin
 const int ST_KB_RESET = 4;
@@ -117,7 +117,7 @@ uint8_t scanCodes[] =
   0x27, // ' (Mapped to '")
   0xE0, // #
   ARD_LEFT_SHIFT, // Lshift
-  0x7E, // #~ (Mapped to ~)
+  0x7E, // #~ (Mapped to ~)was 0x7E
   0x7A, // z
   0x78, // x
   0x63, // c
@@ -282,21 +282,9 @@ void convert_scancode(uint8_t key)
 
   // Special handling required for escaped keypresses
   if (escaped)
-  {
+  { 
     switch (key & 0x7f)
     {
-      case 0x48: // Up arrow
-        send_escaped_key(ARD_UP_ARROW);
-        break;
-      case 0x4b: // Left arrow
-        send_escaped_key(ARD_LEFT_ARROW);
-        break;
-      case 0x4d: // Right arrow
-        send_escaped_key(ARD_RIGHT_ARROW);
-        break;
-      case 0x50: // Down arrow
-        send_escaped_key(ARD_DOWN_ARROW);
-        break;
       case 0x52: // Insert
         send_escaped_key(ARD_INSERT);
         break;
@@ -351,7 +339,19 @@ boolean process_modifier(uint8_t key)
         return true;
       case ST_RIGHT_SHIFT:
         Keyboard.press(ARD_RIGHT_SHIFT);
-        return true;        
+        return true; 
+      case 0x48: // Up arrow
+        Keyboard.press(ARD_UP_ARROW);
+        return true;
+      case 0x4b: // Left arrow
+        Keyboard.press(ARD_LEFT_ARROW);
+        return true; 
+      case 0x4d: // Right arrow
+        Keyboard.press(ARD_RIGHT_ARROW);
+        return true; 
+      case 0x50: // Down arrow
+        Keyboard.press(ARD_DOWN_ARROW);
+        return true;                                  
       case ST_CAPS_LOCK:
         Keyboard.press(ARD_CAPS_LOCK);
         return true;
@@ -371,7 +371,19 @@ boolean process_modifier(uint8_t key)
         return true;
       case ST_RIGHT_SHIFT:
         Keyboard.release(ARD_RIGHT_SHIFT);
-        return true;        
+        return true; 
+      case 0x48: // Up arrow
+        Keyboard.release(ARD_UP_ARROW);
+        return true;
+      case 0x4b: // Left arrow
+        Keyboard.release(ARD_LEFT_ARROW);
+        return true;
+      case 0x4d: // Right arrow
+        Keyboard.release(ARD_RIGHT_ARROW);
+        return true;
+      case 0x50: // Down arrow
+        Keyboard.release(ARD_DOWN_ARROW);
+        return true;                 
       case ST_CAPS_LOCK:
         Keyboard.release(ARD_CAPS_LOCK);
         return true;
@@ -394,6 +406,10 @@ void auto_repeat(void)
     case ST_RIGHT_SHIFT:
     case ST_LEFT_ALT:
     case ST_CAPS_LOCK:
+    case 0x48: // Arrow up
+    case 0x4b: // Arrow left
+    case 0x4d: // Arrow right
+    case 0x50: // Arrow down 
     case 0x00: // No key held down
       key_repeating = false;
       return;
@@ -414,4 +430,3 @@ void auto_repeat(void)
     convert_scancode(last_make);
   }  
 }
-
