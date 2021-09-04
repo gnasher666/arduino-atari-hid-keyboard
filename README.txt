@@ -33,3 +33,5 @@ ST Raspberry Pi project.
 
 Copyright Kevin Peat 2017
 kevin 'at' kevinpeat.com
+
+Small update by myself to change the way the Arrow Keys worked. I needed them to work as a press and hold and not repeating key to resolve issues with some Amiga games running on the MiSTer (Pinball Fantasies as an example). 
