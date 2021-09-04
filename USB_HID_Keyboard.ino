@@ -15,7 +15,7 @@
 * be modified as some of the other Arduinos (eg. Uno) would do
 * -------------------------------------------------------------------------
 */
-#define DEBUG
+// #define DEBUG
 
 // ST keyboard reset pin
 const int ST_KB_RESET = 4;
